@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <p>
+    <a href="../index.html">Повернутися на головну сторінку</a>
+</p>
+    <meta charset="UTF-8">
+    <title>Лабораторні роботи</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #b5c6e4, #e4e9f2);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        form, .input-group, .result, .error, .calculation-steps {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        button, input[type="button"] {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover, input[type="button"]:hover {
+            background: #2980b9;
+        }
+        .error {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .result p, .calculation-steps p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h3>Завдання 1.</h3>
+<p>Це звичайний HTML абзац.</p>
+<script>
+    document.write("<p><strong>Привіт!</strong> Мене звати Максим'юк Богдан, студент групи ІПЗ-23.</p>");
+</script>
+<p>Знову звичайний HTML абзац.</p>
+<form>
+    <input type="button" value="Click me" onclick="alert('Я народився 09.06.2007 року в місті Івано-Франківськ')">
+</form>
+
+<h3>Завдання 2.</h3>
+<form>
+    <input type="button" value="Calculate" onclick="calculation()">
+</form>
+<script>
+    function calculation() {
+        let x = 12, y = 5, z = 54;
+        let result = x * y + x * z - y * z;
+        alert('Результат: ' + result);
+    }
+</script>
+
+<h3>Завдання 3.</h3>
+<form>
+    <label for="inputField">Перше текстове поле:</label>
+    <input type="text" id="inputField" onfocus="onFocus()" onselect="onSelect()">
+
+    <label for="outputField">Друге текстове поле (результат):</label>
+    <input type="text" id="outputField" readonly>
+</form>
+<script>
+    function onFocus() {
+        document.getElementById('outputField').value = "Перше поле отримало фокус!";
+    }
+    function onSelect() {
+        document.getElementById('outputField').value = "Текст у першому полі виділено!";
+    }
+</script>
+
+<h3>Завдання 4.</h3>
+<img src="formula2.png" alt="Формула суми ряду">
+<div class="input-group">
+    <label for="x1">Введіть значення x:</label>
+    <input type="number" id="x1" step="any" placeholder="Введіть число">
+</div>
+<div class="input-group">
+    <label for="y1">Введіть значення y:</label>
+    <input type="number" id="y1" step="any" placeholder="Введіть число">
+</div>
+<button onclick="calculate()">Обчислити</button>
+<div id="error1" class="error" style="display:none;"></div>
+<div id="result1" class="result" style="display:none;">
+    <h3>Результати обчислень:</h3>
+    <p id="output1"></p>
+</div>
+<script>
+    function calculate() {
+        const x = parseFloat(document.getElementById('x1').value);
+        const y = parseFloat(document.getElementById('y1').value);
+        const errorDiv = document.getElementById('error1');
+        const resultDiv = document.getElementById('result1');
+        const output = document.getElementById('output1');
+
+        errorDiv.style.display = 'none';
+        resultDiv.style.display = 'none';
+
+        if (isNaN(x) || isNaN(y)) {
+            errorDiv.textContent = 'Будь ласка, введіть коректні числові значення';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        let result = '';
+        if (Math.pow(x, 2) > 3) {
+            const calc1 = Math.pow(x, 3) - Math.sqrt(Math.abs(x));
+            result += `1. x³ - √x: ${calc1.toFixed(4)}<br>`;
+        } else {
+            result += '1. Умова x² > 3 не виконується<br>';
+        }
+        const F = `(${(x*y).toFixed(4)}, ${(x > 0 && y < 0)})`;
+        result += `2. F = (xy, (x>0) mod y<0): ${F}<br>`;
+        if (y === 0) {
+            result += '3. Ділення на нуль неможливе';
+        } else {
+            result += `3. x + y + xy - x/y: ${(x + y + (x*y) - (x/y)).toFixed(4)}`;
+        }
+
+        output.innerHTML = result;
+        resultDiv.style.display = 'block';
+    }
+</script>
+
+<h3>Завдання 5.</h3>
+<div class="formula">
+   <img src="formula.png" alt="Формула суми ряду">
+</div>
+<div class="input-group">
+    <label for="x2">Введіть значення x:</label>
+    <input type="number" id="x2" step="any" placeholder="Введіть число x">
+</div>
+<div class="input-group">
+    <label for="y2">Введіть значення y:</label>
+    <input type="number" id="y2" step="any" placeholder="Введіть число y">
+</div>
+<button onclick="calculateSum()">Обчислити суму ряду</button>
+<div id="error2" class="error" style="display:none;"></div>
+<div id="result2" class="result" style="display:none;">
+    <h3>Результат обчислення:</h3>
+    <p id="output2"></p>
+</div>
+<div id="steps2" class="calculation-steps" style="display:none;">
+    <h3>Покрокове обчислення:</h3>
+    <p id="step-by-step2"></p>
+</div>
+<script>
+    function factorial(n) {
+        return n <= 1 ? 1 : n * factorial(n-1);
+    }
+    function calculateSum() {
+        const x = parseFloat(document.getElementById('x2').value);
+        const y = parseFloat(document.getElementById('y2').value);
+        const errorDiv = document.getElementById('error2');
+        const resultDiv = document.getElementById('result2');
+        const output = document.getElementById('output2');
+        const stepsDiv = document.getElementById('steps2');
+        const stepByStep = document.getElementById('step-by-step2');
+
+        errorDiv.style.display = 'none';
+        resultDiv.style.display = 'none';
+        stepsDiv.style.display = 'none';
+
+        if (isNaN(x) || isNaN(y)) {
+            errorDiv.textContent = 'Будь ласка, введіть коректні числові значення';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        let totalSum = 0;
+        let stepText = '';
+
+        for (let i = 4; i <= 6; i++) {
+            const sign = Math.pow(-1, i);
+            const numerator = 2*x - y;
+            const denominator = factorial(i);
+            const term = sign * (numerator / denominator);
+            totalSum += term;
+
+            stepText += `i=${i}: (-1)^${i}=${sign}, 2x-y=${numerator}, ${i}!=${denominator}, член=${term.toFixed(6)}<br>`;
+        }
+
+        output.innerHTML = `<b>Сума ряду:</b> ${totalSum.toFixed(6)}`;
+        stepByStep.innerHTML = stepText;
+
+        resultDiv.style.display = 'block';
+        stepsDiv.style.display = 'block';
+    }
+</script>
+</body>
+</html>
