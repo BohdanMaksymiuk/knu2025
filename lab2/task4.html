@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дослідження console.log()</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .section {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .code {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .note {
+            background: #fff8dc;
+            padding: 10px;
+            border-left: 4px solid #ffcc00;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+      <a href="lab2.html">Назад</a>
+    <h1>Дослідження методу console.log()</h1>
+    
+    <div class="note">
+        Відкрийте консоль браузера (F12 → Console) для перегляду результатів.
+    </div>
+    
+    <div class="section">
+        <h2>1. Вивід остачі від ділення</h2>
+        <div class="code">
+            let a = 10;<br>
+            let b = 3;<br>
+            console.log(a % b);<br>
+            console.log("Остача: " + (a % b));<br>
+            console.log("Остача:", a % b);
+        </div>
+        <button onclick="demo1()">Показати в консолі</button>
+    </div>
+    
+    <div class="section">
+        <h2>2. Перевірка ділення без остачі</h2>
+        <div class="code">
+            let x = 15;<br>
+            let y = 5;<br>
+            console.log(x % y === 0);<br>
+            console.log("Ділиться без остачі: " + (x % y === 0));<br>
+            console.log("Ділиться без остачі:", x % y === 0);
+        </div>
+        <button onclick="demo2()">Показати в консолі</button>
+    </div>
+    
+    <div class="section">
+        <h2>3. Вивід масиву</h2>
+        <div class="code">
+            let arr = [10, 20, 30];<br>
+            console.log(arr);<br>
+            console.log("Масив: %s", arr);<br>
+            console.log("Елементи: %d, %d, %d", arr[0], arr[1], arr[2]);
+        </div>
+        <button onclick="demo3()">Показати в консолі</button>
+    </div>
+    
+    <div class="section">
+        <h2>4. Комбінований приклад</h2>
+        <div class="code">
+            let numbers = [7, 14, 21];<br>
+            let n = 7;<br>
+            for (let i = 0; i < numbers.length; i++) {<br>
+            &nbsp;&nbsp;console.log(numbers[i] + " % " + n + " = " + (numbers[i] % n));<br>
+            }
+        </div>
+        <button onclick="demo4()">Показати в консолі</button>
+    </div>
+
+    <script>
+        function demo1() {
+            console.clear();
+            console.log("=== Остача від ділення ===");
+            let a = 10;
+            let b = 3;
+            console.log(a % b);
+            console.log("Остача: " + (a % b));
+            console.log("Остача:", a % b);
+        }
+        
+        function demo2() {
+            console.clear();
+            console.log("=== Перевірка ділення без остачі ===");
+            let x = 15;
+            let y = 5;
+            console.log(x % y === 0);
+            console.log("Ділиться без остачі: " + (x % y === 0));
+            console.log("Ділиться без остачі:", x % y === 0);
+            
+            let x2 = 15;
+            let y2 = 4;
+            console.log(x2 + " % " + y2 + " === 0 -> " + (x2 % y2 === 0));
+        }
+        
+        function demo3() {
+            console.clear();
+            console.log("=== Вивід масиву ===");
+            let arr = [10, 20, 30];
+            console.log(arr);
+            console.log("Масив: %s", arr);
+            console.log("Елементи: %d, %d, %d", arr[0], arr[1], arr[2]);
+        }
+        
+        function demo4() {
+            console.clear();
+            console.log("=== Комбінований приклад ===");
+            let numbers = [7, 14, 21];
+            let n = 7;
+            for (let i = 0; i < numbers.length; i++) {
+                console.log(numbers[i] + " % " + n + " = " + (numbers[i] % n));
+            }
+        }
+        
+        console.log("Вітаємо! Відкрийте консоль (F12) для перегляду результатів.");
+    </script>
+</body>
+</html>

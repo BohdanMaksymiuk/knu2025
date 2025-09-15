@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Годинник - Варіант 9</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #fdbb2d;
+        }
+        
+        .clock {
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fdbb2d;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .format {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #b21f1f;
+            font-weight: bold;
+        }
+        
+        .explanation {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+     <a href="lab2.html">Назад</a>
+    <div class="container">
+        <h1>Годинник JavaScript</h1>
+        <div class="clock" id="clock">0000:00:00-00:00:00</div>
+        <div class="format">Формат: year#moun#day-hour#min#sec</div>
+        
+        <div class="explanation">
+            <p>Цей годинник відображає поточну дату та час у форматі, вказаному у варіанті 9:</p>
+            <p>Рік#Місяць#День-Година#Хвилина#Секунда</p>
+            <p>Дата та час оновлюються в реальному часі кожну секунду.</p>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const timeString = `${year}.${month}.${day}-${hours}:${minutes}:${seconds}`;
+            
+            document.getElementById('clock').textContent = timeString;
+        }
+  
+        updateClock();
+
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

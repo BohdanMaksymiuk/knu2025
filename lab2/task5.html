@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Методи консолі</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .method {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .note {
+            background: #fff8dc;
+            padding: 10px;
+            border-left: 4px solid #ffcc00;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+      <a href="lab2.html">Назад</a>
+    <h1>Дослідження методів консолі</h1>
+    
+    <div class="note">
+        Відкрийте консоль браузера (F12 → Console) для перегляду результатів.
+    </div>
+    
+    <div class="method">
+        <h2>console.info()</h2>
+        <p>Виводить інформаційне повідомлення.</p>
+        <button onclick="showInfo()">Показати info</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.warn()</h2>
+        <p>Виводить попередження.</p>
+        <button onclick="showWarn()">Показати warning</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.error()</h2>
+        <p>Виводить повідомлення про помилку.</p>
+        <button onclick="showError()">Показати error</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.dir()</h2>
+        <p>Відображає список властивостей об'єкта.</p>
+        <button onclick="showDir()">Показати dir</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.dirxml()</h2>
+        <p>Відображає дерево DOM елемента.</p>
+        <button onclick="showDirXml()">Показати dirxml</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.time() і console.timeEnd()</h2>
+        <p>Вимірює час виконання коду.</p>
+        <button onclick="measureTime()">Запустити таймер</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.profile() і console.profileEnd()</h2>
+        <p>Запускає і зупиняє профілювання.</p>
+        <button onclick="startProfile()">Запустити профілювання</button>
+    </div>
+    
+    <div class="method">
+        <h2>console.assert()</h2>
+        <p>Виводить повідомлення, якщо твердження хибне.</p>
+        <button onclick="testAssert()">Перевірити assert</button>
+    </div>
+
+    <script>
+        function showInfo() {
+            console.info('Це інформаційне повідомлення');
+        }
+        
+        function showWarn() {
+            console.warn('Увага! Це попередження');
+        }
+        
+        function showError() {
+            console.error('Ой! Сталася помилка');
+        }
+        
+        function showDir() {
+            const obj = { 
+                name: 'Тест', 
+                value: 42, 
+                items: ['a', 'b', 'c'] 
+            };
+            console.dir(obj);
+        }
+        
+        function showDirXml() {
+            console.dirxml(document.body);
+        }
+        
+        function measureTime() {
+            console.time('Час виконання');
+            for (let i = 0; i < 1000000; i++) { }
+            console.timeEnd('Час виконання');
+        }
+        
+        function startProfile() {
+            console.profile('Мій профіль');
+            for (let i = 0; i < 1000000; i++) { }
+            console.profileEnd('Мій профіль');
+        }
+        
+        function testAssert() {
+            const x = 5;
+            console.assert(x === 10, 'x не дорівнює 10!');
+            console.assert(x === 5, 'x не дорівнює 5!');
+        }
+        
+        console.log('Вітаємо! Відкрийте консоль (F12) для перегляду результатів.');
+    </script>
+</body>
+</html>
