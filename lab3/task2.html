@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екранна клавіатура</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .text-field {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .keyboard {
+            margin-bottom: 20px;
+        }
+        
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+        
+        .key {
+            width: 40px;
+            height: 40px;
+            margin: 2px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .key:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .key-space {
+            width: 200px;
+        }
+        
+        .key-clear {
+            background-color: #ffcccc;
+        }
+        
+        .btn-clear {
+            padding: 10px 20px;
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn-clear:hover {
+            background-color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <a href="lab3.html" class="back-link">Повернутися назад</a>
+    <h1>Екранна клавіатура</h1>
+    
+    <textarea id="textField" class="text-field" placeholder="Текст буде з'являтися тут..."></textarea>
+    
+    <div id="keyboard" class="keyboard">
+    
+    </div>
+    
+    <button id="clearBtn" class="btn-clear">Очистити поле</button>
+
+    <script>
+     
+        const ukrainianLetters = ['а', 'б', 'в', 'г', 'ґ', 'д', 'е', 'є', 'ж', 'з', 'и', 'і', 'ї', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ю', 'я'];
+        
+        const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        
+        const textField = document.getElementById('textField');
+        const keyboard = document.getElementById('keyboard');
+        const clearBtn = document.getElementById('clearBtn');
+        
+        function addText(char) {
+            textField.value += char;
+        }
+        
+        function createKeyboard() {
+            
+            const numbersRow = document.createElement('div');
+            numbersRow.className = 'keyboard-row';
+            
+            numbers.forEach(num => {
+                const key = document.createElement('div');
+                key.className = 'key';
+                key.textContent = num;
+                key.onclick = () => addText(num);
+                numbersRow.appendChild(key);
+            });
+            
+            keyboard.appendChild(numbersRow);
+            
+            const lettersPerRow = Math.ceil(ukrainianLetters.length / 3);
+            
+            for (let i = 0; i < 3; i++) {
+                const row = document.createElement('div');
+                row.className = 'keyboard-row';
+                
+                const startIndex = i * lettersPerRow;
+                const endIndex = Math.min(startIndex + lettersPerRow, ukrainianLetters.length);
+                
+                for (let j = startIndex; j < endIndex; j++) {
+                    const key = document.createElement('div');
+                    key.className = 'key';
+                    key.textContent = ukrainianLetters[j];
+                    key.onclick = () => addText(ukrainianLetters[j]);
+                    row.appendChild(key);
+                }
+                
+                keyboard.appendChild(row);
+            }
+            
+            const lastRow = document.createElement('div');
+            lastRow.className = 'keyboard-row';
+            
+            const spaceKey = document.createElement('div');
+            spaceKey.className = 'key key-space';
+            spaceKey.textContent = 'Пробіл';
+            spaceKey.onclick = () => addText(' ');
+            lastRow.appendChild(spaceKey);
+            
+            const clearKey = document.createElement('div');
+            clearKey.className = 'key key-clear';
+            clearKey.textContent = 'Очистити';
+            clearKey.onclick = () => textField.value = '';
+            lastRow.appendChild(clearKey);
+            
+            keyboard.appendChild(lastRow);
+        }
+        
+        createKeyboard();
+        clearBtn.onclick = () => textField.value = '';
+    </script>
+</body>
+</html>

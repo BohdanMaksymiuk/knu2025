@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Дерево</title>
+    <style>
+        body { font-family: Arial; max-width: 400px; margin: 20px auto; padding: 20px; }
+        .back-btn { background: #666; color: white; padding: 8px 15px; border: none; cursor: pointer; margin-bottom: 20px; }
+        .category { cursor: pointer; font-weight: bold; margin: 10px 0; }
+        .items { margin-left: 20px; display: none; }
+        .item { color: #555; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">← Назад</button>
+    <h2>Ієрархічне дерево</h2>
+    
+    <div id="tree"></div>
+
+    <script>
+        const data = {
+            "fruits": ["apple", "pineapple", "appricot", "pear", "lemon"],
+            "vegetables": ["potatoes", "beetroot", "carrots", "pear"]
+        };
+
+        const tree = document.getElementById('tree');
+
+        for (const category in data) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'category';
+            categoryDiv.textContent = category;
+            categoryDiv.onclick = function() {
+                const items = this.nextElementSibling;
+                items.style.display = items.style.display === 'block' ? 'none' : 'block';
+            };
+            
+            const itemsDiv = document.createElement('div');
+            itemsDiv.className = 'items';
+            
+            data[category].forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.textContent = item;
+                itemsDiv.appendChild(itemDiv);
+            });
+            
+            tree.appendChild(categoryDiv);
+            tree.appendChild(itemsDiv);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арифметичний тест</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn {
+            background-color: #95a5a6;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .back-btn:hover {
+            background-color: #7f8c8d;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .task {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 30px 0;
+            color: #333;
+        }
+        
+        .input-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        input {
+            padding: 10px;
+            font-size: 18px;
+            width: 120px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        #checkBtn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        #checkBtn:hover {
+            background-color: #2980b9;
+        }
+        
+        #nextBtn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        #nextBtn:hover {
+            background-color: #27ae60;
+        }
+        
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            min-height: 30px;
+            font-weight: bold;
+        }
+        
+        .correct {
+            color: #27ae60;
+        }
+        
+        .incorrect {
+            color: #e74c3c;
+        }
+        
+        .progress {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">← Назад</button>
+        
+        <h1>Арифметичний тест</h1>
+        
+        <div class="score" id="score">Загальний рахунок: 0% (0 правильних відповідей з 0)</div>
+        
+        <div class="task" id="task"></div>
+        
+        <div class="input-container">
+            <input type="number" id="answer" placeholder="Відповідь">
+        </div>
+        
+        <div class="buttons">
+            <button id="checkBtn">Перевірити</button>
+            <button id="nextBtn">Наступне завдання</button>
+        </div>
+        
+        <div class="result" id="result"></div>
+        
+        <div class="progress" id="progress">Завдання 0 з 5</div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        const taskElement = document.getElementById('task');
+        const answerInput = document.getElementById('answer');
+        const checkBtn = document.getElementById('checkBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const resultElement = document.getElementById('result');
+        const scoreElement = document.getElementById('score');
+        const progressElement = document.getElementById('progress');
+        
+        let currentTask = 0;
+        let correctAnswers = 0;
+        let totalTasks = 5;
+        let currentExpression = '';
+        let correctAnswer = 0;
+        
+        const operations = ['+', '-', '*', '/'];
+        
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 10);
+        }
+        
+        function generateTask() {
+            const num1 = getRandomNumber();
+            let num2 = getRandomNumber();
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            
+            if (operation === '/') {
+                while (num2 === 0) {
+                    num2 = getRandomNumber();
+                }
+               
+                correctAnswer = num1 * num2;
+                currentExpression = `${correctAnswer} ${operation} ${num2}`;
+                correctAnswer = correctAnswer / num2;
+            } else {
+                currentExpression = `${num1} ${operation} ${num2}`;
+        
+                switch(operation) {
+                    case '+': correctAnswer = num1 + num2; break;
+                    case '-': correctAnswer = num1 - num2; break;
+                    case '*': correctAnswer = num1 * num2; break;
+                }
+            }
+            
+            taskElement.textContent = currentExpression + ' =';
+            answerInput.value = '';
+            resultElement.textContent = '';
+            answerInput.focus();
+        }
+        
+        function checkAnswer() {
+            const userAnswer = parseFloat(answerInput.value);
+            
+            if (isNaN(userAnswer)) {
+                resultElement.textContent = 'Будь ласка, введіть число!';
+                resultElement.className = 'result incorrect';
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                resultElement.textContent = 'Правильно!';
+                resultElement.className = 'result correct';
+                correctAnswers++;
+            } else {
+                resultElement.textContent = `Помилка, правильна відповідь «${correctAnswer}»`;
+                resultElement.className = 'result incorrect';
+            }
+            
+            updateScore();
+        }
+        
+        function updateScore() {
+            const percentage = currentTask > 0 ? Math.round((correctAnswers / currentTask) * 100) : 0;
+            scoreElement.textContent = `Загальний рахунок: ${percentage}% (${correctAnswers} правильних відповідей з ${currentTask})`;
+        }
+        
+        function nextTask() {
+            currentTask++;
+            
+            if (currentTask > totalTasks) {
+                taskElement.textContent = 'Тест завершено!';
+                answerInput.style.display = 'none';
+                checkBtn.style.display = 'none';
+                nextBtn.textContent = 'Почати знову';
+                nextBtn.onclick = restartTest;
+                progressElement.textContent = 'Всі завдання виконано!';
+            } else {
+                generateTask();
+                progressElement.textContent = `Завдання ${currentTask} з ${totalTasks}`;
+            }
+        }
+        
+        function restartTest() {
+            currentTask = 0;
+            correctAnswers = 0;
+            answerInput.style.display = 'block';
+            checkBtn.style.display = 'block';
+            nextBtn.textContent = 'Наступне завдання';
+            nextBtn.onclick = nextTask;
+            updateScore();
+            nextTask();
+        }
+        
+        checkBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', nextTask);
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        updateScore();
+        nextTask();
+    </script>
+</body>
+</html>
