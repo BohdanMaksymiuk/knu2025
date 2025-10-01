@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Тест</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 20px auto; padding: 20px; }
+        .question { margin: 15px 0; padding: 10px; border: 1px solid #ddd; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; margin: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        .back-btn { background: #666; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">← Назад</button>
+    <h1>Тестування</h1>
+    
+    <form id="testForm">
+        <!-- Радіокнопки 1 -->
+        <div class="question">
+            <p>1. Столиця України?</p>
+            <label><input type="radio" name="q1" value="0"> Львів</label>
+            <label><input type="radio" name="q1" value="1"> Київ</label>
+            <label><input type="radio" name="q1" value="0"> Одеса</label>
+            <label><input type="radio" name="q1" value="0"> Харків</label>
+        </div>
+
+        <!-- Радіокнопки 2 -->
+        <div class="question">
+            <p>2. Найбільша планета Сонячної системи?</p>
+            <label><input type="radio" name="q2" value="0"> Земля</label>
+            <label><input type="radio" name="q2" value="0"> Сатурн</label>
+            <label><input type="radio" name="q2" value="1"> Юпітер</label>
+            <label><input type="radio" name="q2" value="0"> Марс</label>
+        </div>
+
+        <!-- Checkbox 1 -->
+        <div class="question">
+            <p>3. Які мови є об'єктно-орієнтованими? (2 правильні)</p>
+            <label><input type="checkbox" name="q3" value="1"> Java</label>
+            <label><input type="checkbox" name="q3" value="0"> HTML</label>
+            <label><input type="checkbox" name="q3" value="1"> C++</label>
+            <label><input type="checkbox" name="q3" value="0"> CSS</label>
+        </div>
+
+        <!-- Checkbox 2 -->
+        <div class="question">
+            <p>4. Які кольори є основним? (2 правильні)</p>
+            <label><input type="checkbox" name="q4" value="1"> Червоний</label>
+            <label><input type="checkbox" name="q4" value="0"> Зелений</label>
+            <label><input type="checkbox" name="q4" value="1"> Синій</label>
+            <label><input type="checkbox" name="q4" value="0"> Фіолетовий</label>
+        </div>
+
+        <!-- Select single -->
+        <div class="question">
+            <p>5. Який тег створює посилання в HTML?</p>
+            <select name="q5">
+                <option value="0">div</option>
+                <option value="0">p</option>
+                <option value="1">a</option>
+                <option value="0">span</option>
+            </select>
+        </div>
+
+        <!-- Select multiple -->
+        <div class="question">
+            <p>6. Які із переліченого є фруктами? (2 правильні)</p>
+            <select name="q6" multiple size="4">
+                <option value="1">Яблуко</option>
+                <option value="0">Морква</option>
+                <option value="1">Апельсин</option>
+                <option value="0">Картопля</option>
+            </select>
+        </div>
+
+        <!-- Text input -->
+        <div class="question">
+            <p>7. Напишіть назву найбільшого океану:</p>
+            <input type="text" name="q7">
+        </div>
+
+        <button type="button" onclick="checkTest()">Завершити тестування</button>
+    </form>
+
+    <div id="results" style="display:none">
+        <h2>Результати тестування</h2>
+        <table>
+            <tr><th>Питання</th><th>Ваша відповідь</th><th>Бали</th></tr>
+            <tbody id="resultsBody"></tbody>
+        </table>
+        <p><strong>Загальний бал: <span id="totalScore">0</span>/7</strong></p>
+    </div>
+
+    <script>
+        function checkTest() {
+            console.log("Функція checkTest викликана!"); // Додав для перевірки
+            
+            const form = document.getElementById('testForm');
+            let totalScore = 0;
+            const resultsBody = document.getElementById('resultsBody');
+            resultsBody.innerHTML = '';
+
+            // Q1 - Радіокнопки
+            const q1Score = getRadioScore(form.q1);
+            addResultRow(1, getRadioText(form.q1), q1Score);
+            totalScore += q1Score;
+
+            // Q2 - Радіокнопки
+            const q2Score = getRadioScore(form.q2);
+            addResultRow(2, getRadioText(form.q2), q2Score);
+            totalScore += q2Score;
+
+            // Q3 - Checkbox
+            const q3Score = getCheckboxScore(form.q3);
+            addResultRow(3, getCheckboxText(form.q3), q3Score);
+            totalScore += q3Score;
+
+            // Q4 - Checkbox
+            const q4Score = getCheckboxScore(form.q4);
+            addResultRow(4, getCheckboxText(form.q4), q4Score);
+            totalScore += q4Score;
+
+            // Q5 - Select
+            const q5Score = parseInt(form.q5.value);
+            addResultRow(5, form.q5.options[form.q5.selectedIndex].text, q5Score);
+            totalScore += q5Score;
+
+            // Q6 - Select multiple
+            const q6Score = getSelectScore(form.q6);
+            addResultRow(6, getSelectText(form.q6), q6Score);
+            totalScore += q6Score;
+
+            // Q7 - Text
+            const q7Answer = form.q7.value.toLowerCase().trim();
+            const q7Score = (q7Answer === "тихий" || q7Answer === "тихий океан") ? 1 : 0;
+            addResultRow(7, form.q7.value || "-", q7Score);
+            totalScore += q7Score;
+
+            document.getElementById('totalScore').textContent = totalScore;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function getRadioScore(radios) {
+            for (let radio of radios) {
+                if (radio.checked) return parseInt(radio.value);
+            }
+            return 0;
+        }
+
+        function getRadioText(radios) {
+            for (let radio of radios) {
+                if (radio.checked) return radio.parentElement.textContent.trim();
+            }
+            return "-";
+        }
+
+        function getCheckboxScore(checkboxes) {
+            let selected = [];
+            for (let checkbox of checkboxes) {
+                if (checkbox.checked) selected.push(checkbox.value);
+            }
+            if (selected.length !== 2) return 0;
+            return selected.filter(val => val === "1").length;
+        }
+
+        function getCheckboxText(checkboxes) {
+            let selected = [];
+            for (let checkbox of checkboxes) {
+                if (checkbox.checked) selected.push(checkbox.parentElement.textContent.trim());
+            }
+            return selected.length > 0 ? selected.join(", ") : "-";
+        }
+
+        function getSelectScore(select) {
+            let selected = [];
+            for (let option of select.options) {
+                if (option.selected) selected.push(option.value);
+            }
+            if (selected.length !== 2) return 0;
+            return selected.filter(val => val === "1").length;
+        }
+
+        function getSelectText(select) {
+            let selected = [];
+            for (let option of select.options) {
+                if (option.selected) selected.push(option.text);
+            }
+            return selected.length > 0 ? selected.join(", ") : "-";
+        }
+
+        function addResultRow(questionNum, answer, score) {
+            const resultsBody = document.getElementById('resultsBody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${questionNum}</td>
+                <td>${answer}</td>
+                <td>${score}</td>
+            `;
+            resultsBody.appendChild(row);
+        }
+    </script>
+</body>
+</html>
