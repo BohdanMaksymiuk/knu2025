@@ -5,11 +5,9 @@ body {
       transition: background 0.3s, color 0.3s;
     }
 
-    /* Теми */
     body.dark { background: #657077; color: #fff; }
     body.light { background: #f5f5f5; color: #222; }
 
-    /* ===== Перемикач теми ===== */
     .mode {
     
       display: flex;
@@ -40,7 +38,6 @@ body {
       color: white;
     }
 
-    /* ===== Навігація ===== */
     .burger {
       display: none;
       font-size: 28px;
@@ -76,7 +73,6 @@ body {
       }
     }
 
-    /* ===== "Модальне" вікно ===== */
     .modal {
       display: none;
       position: fixed;
@@ -115,7 +111,6 @@ body {
       color: #333;
     }
 
-    /* ===== Вкладки ===== */
     .tabbed_box h4 { font-size: 20px; margin-bottom: 10px; }
 
     .tabbed_area {
