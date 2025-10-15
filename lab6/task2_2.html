@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Перевірка форми</title>
+  <style>
+    body { font-family: Arial; margin: 30px; }
+    input { padding: 5px; margin: 5px 0; width: 250px; }
+    .valid {
+      border: 2px solid green;
+      color: green;
+    }
+    .invalid {
+      border: 2px solid red;
+      color: red;
+    }
+    span {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Завдання 2.2</h2>
+  <p>Перевірка валідності введених даних:</p>
+
+  <form id="myForm" onsubmit="return validateForm()">
+    <label for="email">E-mail:</label><br>
+    <input type="text" id="email" name="email">
+    <span id="emailCheck"></span><br>
+
+    <label for="name">Ім’я та прізвище:</label><br>
+    <input type="text" id="name" name="name">
+    <span id="nameCheck"></span><br>
+
+    <label for="login">Логін:</label><br>
+    <input type="text" id="login" name="login">
+    <span id="loginCheck"></span><br>
+
+    <label for="password">Пароль:</label><br>
+    <input type="password" id="password" name="password">
+    <span id="passCheck"></span><br>
+
+    <label for="index">Поштовий індекс:</label><br>
+    <input type="text" id="index" name="index">
+    <span id="indexCheck"></span><br><br>
+
+    <input type="submit" value="Перевірити">
+    <input type="reset" value="Очистити">
+  </form>
+
+  <br>
+  <button onclick="history.back()">Назад</button>
+
+  <script>
+    function validateForm() {
+      let valid = true;
+
+      let emailPattern = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
+      let namePattern = /^[A-Za-zА-Яа-яІіЇїЄєҐґ]+ [A-Za-zА-Яа-яІіЇїЄєҐґ]+$/;
+      let loginPattern = /^[A-Za-z]+$/;
+      let passPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_!@#$%^&*]).{8,}$/;
+      let indexPattern = /^[0-9]{5}$/;
+
+      let email = document.getElementById("email");
+      let name = document.getElementById("name");
+      let login = document.getElementById("login");
+      let password = document.getElementById("password");
+      let index = document.getElementById("index");
+
+      checkField(email, emailPattern, "emailCheck");
+
+      checkField(name, namePattern, "nameCheck");
+
+      checkField(login, loginPattern, "loginCheck");
+
+      checkField(password, passPattern, "passCheck");
+
+      checkField(index, indexPattern, "indexCheck");
+
+      return false;
+    }
+
+    function checkField(field, pattern, checkId) {
+      let check = document.getElementById(checkId);
+      if (pattern.test(field.value)) {
+        field.className = "valid";
+        check.textContent = "✓";
+        check.style.color = "green";
+      } else {
+        field.className = "invalid";
+        check.textContent = "✖";
+        check.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
