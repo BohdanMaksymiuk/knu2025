@@ -17,7 +17,7 @@
     <h1>Тестування</h1>
     
     <form id="testForm">
-        <!-- Радіокнопки 1 -->
+
         <div class="question">
             <p>1. Столиця України?</p>
             <label><input type="radio" name="q1" value="0"> Львів</label>
@@ -26,7 +26,6 @@
             <label><input type="radio" name="q1" value="0"> Харків</label>
         </div>
 
-        <!-- Радіокнопки 2 -->
         <div class="question">
             <p>2. Найбільша планета Сонячної системи?</p>
             <label><input type="radio" name="q2" value="0"> Земля</label>
@@ -35,7 +34,6 @@
             <label><input type="radio" name="q2" value="0"> Марс</label>
         </div>
 
-        <!-- Checkbox 1 -->
         <div class="question">
             <p>3. Які мови є об'єктно-орієнтованими? (2 правильні)</p>
             <label><input type="checkbox" name="q3" value="1"> Java</label>
@@ -44,7 +42,6 @@
             <label><input type="checkbox" name="q3" value="0"> CSS</label>
         </div>
 
-        <!-- Checkbox 2 -->
         <div class="question">
             <p>4. Які кольори є основним? (2 правильні)</p>
             <label><input type="checkbox" name="q4" value="1"> Червоний</label>
@@ -53,7 +50,6 @@
             <label><input type="checkbox" name="q4" value="0"> Фіолетовий</label>
         </div>
 
-        <!-- Select single -->
         <div class="question">
             <p>5. Який тег створює посилання в HTML?</p>
             <select name="q5">
@@ -64,7 +60,6 @@
             </select>
         </div>
 
-        <!-- Select multiple -->
         <div class="question">
             <p>6. Які із переліченого є фруктами? (2 правильні)</p>
             <select name="q6" multiple size="4">
@@ -75,7 +70,6 @@
             </select>
         </div>
 
-        <!-- Text input -->
         <div class="question">
             <p>7. Напишіть назву найбільшого океану:</p>
             <input type="text" name="q7">
@@ -95,44 +89,38 @@
 
     <script>
         function checkTest() {
-            console.log("Функція checkTest викликана!"); // Додав для перевірки
+            console.log("Функція checkTest викликана!"); 
             
             const form = document.getElementById('testForm');
             let totalScore = 0;
             const resultsBody = document.getElementById('resultsBody');
             resultsBody.innerHTML = '';
 
-            // Q1 - Радіокнопки
+           
             const q1Score = getRadioScore(form.q1);
             addResultRow(1, getRadioText(form.q1), q1Score);
             totalScore += q1Score;
 
-            // Q2 - Радіокнопки
             const q2Score = getRadioScore(form.q2);
             addResultRow(2, getRadioText(form.q2), q2Score);
             totalScore += q2Score;
 
-            // Q3 - Checkbox
             const q3Score = getCheckboxScore(form.q3);
             addResultRow(3, getCheckboxText(form.q3), q3Score);
             totalScore += q3Score;
 
-            // Q4 - Checkbox
             const q4Score = getCheckboxScore(form.q4);
             addResultRow(4, getCheckboxText(form.q4), q4Score);
             totalScore += q4Score;
 
-            // Q5 - Select
             const q5Score = parseInt(form.q5.value);
             addResultRow(5, form.q5.options[form.q5.selectedIndex].text, q5Score);
             totalScore += q5Score;
 
-            // Q6 - Select multiple
             const q6Score = getSelectScore(form.q6);
             addResultRow(6, getSelectText(form.q6), q6Score);
             totalScore += q6Score;
 
-            // Q7 - Text
             const q7Answer = form.q7.value.toLowerCase().trim();
             const q7Score = (q7Answer === "тихий" || q7Answer === "тихий океан") ? 1 : 0;
             addResultRow(7, form.q7.value || "-", q7Score);
