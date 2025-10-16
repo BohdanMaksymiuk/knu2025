@@ -8,9 +8,8 @@ let product = ["Зошит", "Ручка", "Олівець"];
 let quantity = ["105", "200", "150"];
 let cost = ["26", "10.5", "5"];
 
-let currentIndex = -1; // видимий індекс для обох функцій
+let currentIndex = -1; 
 
-// Функція для виведення кількості і вартості
 function fun1() {
     let select = document.form1.product_select;
     currentIndex = select.selectedIndex;
@@ -27,7 +26,6 @@ function fun1() {
     output2.value = "Вартість за одиницю: " + cost[currentIndex] + " грн";
 }
 
-// Функція для виведення загальної суми
 function fun2() {
     let output3 = document.form1.output_total;
 
@@ -40,7 +38,6 @@ function fun2() {
     output3.value = "Загальна вартість: " + total.toFixed(2) + " грн";
 }
 
-// Функція для кнопки "Назад"
 function goBack() {
     window.history.back();
 }
