@@ -16,7 +16,7 @@ function fun1() {
 
     let output1 = document.form1.output_quantity;
     let output2 = document.form1.output_cost;
-
+    
     if (currentIndex < 0) {
         alert("Оберіть товар із списку!");
         return;
@@ -29,11 +29,11 @@ function fun1() {
 function fun2() {
     let output3 = document.form1.output_total;
 
-    if (currentIndex < 0) {
+    if (currentIndex < 1) {
         alert("Спочатку оберіть товар!");
         return;
     }
-
+    
     let total = parseFloat(quantity[currentIndex]) * parseFloat(cost[currentIndex]);
     output3.value = "Загальна вартість: " + total.toFixed(2) + " грн";
 }
