@@ -17,8 +17,10 @@ function fun1() {
     let output1 = document.form1.output_quantity;
     let output2 = document.form1.output_cost;
     
-    if (currentIndex < 0) {
+    if (select.value === "") {
         alert("Оберіть товар із списку!");
+        output1.value="";
+        output2.value="";
         return;
     }
 
@@ -29,7 +31,7 @@ function fun1() {
 function fun2() {
     let output3 = document.form1.output_total;
 
-    if (currentIndex < 1) {
+    if (currentIndex < 0) {
         alert("Спочатку оберіть товар!");
         return;
     }
