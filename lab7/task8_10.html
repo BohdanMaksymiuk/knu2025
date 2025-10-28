@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Лабораторна робота №7</title>
   <link rel="stylesheet" href="style2.css">
-   <div class="nav-buttons">
+  <div class="nav-buttons">
     <a href="lab7.html" class="btn-nav">На головну</a>
   </div>
 </head>
@@ -12,54 +12,98 @@
   <h1>Лабораторна робота №7. Завдання 8–10</h1>
 
   <section>
-    <h2>Завдання 8: Видалити всі голосні літери з рядка</h2>
+    <h2>Завдання 8: Обчислити кількість голосних літер у рядку</h2>
     <input id="str8" type="text" placeholder="Введіть рядок">
-    <button onclick="removeVowels()">Виконати</button>
+    <button onclick="countVowels()">Виконати</button>
     <p id="res8"></p>
   </section>
 
   <section>
-    <h2>Завдання 9: Замінити всі пробіли на "_"</h2>
+    <h2>Завдання 9: Видалити всі символи, що не є алфавітними</h2>
     <input id="str9" type="text" placeholder="Введіть рядок">
-    <button onclick="replaceSpaces()">Виконати</button>
+    <button onclick="removeNonAlphabetic()">Виконати</button>
     <p id="res9"></p>
   </section>
 
   <section>
-    <h2>Завдання 10: Перевірити, чи є підрядок паліндромом (довжина ≥ 3)</h2>
-    <input id="str10" type="text" placeholder="Введіть рядок">
-    <button onclick="checkSubPalindrome()">Перевірити</button>
+    <h2>Завдання 10: Знайти найменший підрядок, що містить усі літери іншого рядка</h2>
+    <input id="str10" type="text" placeholder="Введіть основний рядок" style="display: block; margin-bottom: 10px;">
+    <input id="pattern10" type="text" placeholder="Введіть рядок з літерами для пошуку">
+    <button onclick="findSmallestSubstring()">Знайти</button>
     <p id="res10"></p>
   </section>
 
   <script>
-    function removeVowels() {
+    function countVowels() {
       const str = document.getElementById("str8").value;
-      const result = str.replace(/[aeiouаеєиіїоуюяAEIOUАЕЄИІЇОУЮЯ]/g, "");
-      document.getElementById("res8").textContent = result;
+      const vowels = str.match(/[aeiouаеєиіїоуюяAEIOUАЕЄИІЇОУЮЯ]/g);
+      const count = vowels ? vowels.length : 0;
+      document.getElementById("res8").textContent = `Кількість голосних літер: ${count}`;
     }
 
-    function replaceSpaces() {
+    function removeNonAlphabetic() {
       const str = document.getElementById("str9").value;
-      const result = str.replace(/\s+/g, "_");
-      document.getElementById("res9").textContent = result;
+      const result = str.replace(/[^a-zA-Zа-яА-ЯєЄїЇіІґҐ]/g, "");
+      document.getElementById("res9").textContent = `Результат: ${result}`;
     }
 
-    function checkSubPalindrome() {
-      const str = document.getElementById("str10").value.toLowerCase().replace(/\s+/g, "");
-      let found = false;
-
-      for (let i = 0; i < str.length; i++) {
-        for (let j = i + 3; j <= str.length; j++) {
-          const sub = str.substring(i, j);
-          if (sub === sub.split("").reverse().join("")) {
-            document.getElementById("res10").textContent = 
-              `Є паліндромний підрядок: "${sub}"`;
-            return;
-          }
-        }
+    function findSmallestSubstring() {
+      const str = document.getElementById("str10").value;
+      const pattern = document.getElementById("pattern10").value;
+      
+      if (!pattern) {
+        document.getElementById("res10").textContent = "Будь ласка, введіть рядок для пошуку";
+        return;
       }
-      document.getElementById("res10").textContent = "Паліндромних підрядків не знайдено";
+
+      const result = getSmallestSubstring(str, pattern);
+      document.getElementById("res10").textContent = result 
+        ? `Найменший підрядок: "${result}"`
+        : "Підрядок не знайдено";
+    }
+
+    function getSmallestSubstring(str, pattern) {
+      if (str.length === 0 || pattern.length === 0) return "";
+      
+      const patternMap = new Map();
+      for (let char of pattern) {
+        patternMap.set(char, (patternMap.get(char) || 0) + 1);
+      }
+
+      let required = patternMap.size;
+      let left = 0, right = 0;
+      let formed = 0;
+      const windowCounts = new Map();
+      
+      let ans = [-1, 0, 0]; 
+
+      while (right < str.length) {
+        let char = str[right];
+        windowCounts.set(char, (windowCounts.get(char) || 0) + 1);
+
+        if (patternMap.has(char) && windowCounts.get(char) === patternMap.get(char)) {
+          formed++;
+        }
+
+        while (left <= right && formed === required) {
+          char = str[left];
+          
+          if (ans[0] === -1 || right - left + 1 < ans[0]) {
+            ans[0] = right - left + 1;
+            ans[1] = left;
+            ans[2] = right;
+          }
+
+          windowCounts.set(char, windowCounts.get(char) - 1);
+          if (patternMap.has(char) && windowCounts.get(char) < patternMap.get(char)) {
+            formed--;
+          }
+          left++;
+        }
+        right++;
+      }
+
+      return ans[0] === -1 ? "" : str.substring(ans[1], ans[2] + 1);
     }
   </script>
 </body>
