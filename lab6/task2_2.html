@@ -100,26 +100,3 @@
 
 <input type="button" value="Купити" onClick="lab1()"><br><br>
 <input type="number" name="input_amount" min="1" placeholder="Кількість"><br><br>
-
-
-function lab1() {
-    if (currentIndex < 0) {
-        alert("Спочатку оберіть товар!");
-        return;
-    }
-
-    let inputAmount = parseInt(document.form1.input_amount.value);
-
-    if (isNaN(inputAmount) || inputAmount <= 0) {
-        alert("Введіть коректну кількість товару!");
-        return;
-    }
-
-    if (inputAmount <= quantity[currentIndex]) {
-        quantity[currentIndex] -= inputAmount;
-        alert("Товар додано в кошик!");
-        document.form1.output_quantity.value = "Кількість на складі: " + quantity[currentIndex];
-    } else {
-        alert("Недостатньо товару на складі!");
-    }
-}
