@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Завдання 1–6</title>
+    <link rel="stylesheet" href="style.css">
+    <div class="nav-buttons">
+    <a href="../lab8.html" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+
+    <div class="container">
+        <section class="card">
+            <h2>Завдання 3. Клас Car</h2>
+             <div id="carOutput" class="result"></div>
+        </section>
+    </div>
+
+    <script>
+        class Car {
+      constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+      }
+      info() {
+        return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+      }
+    }
+    const car1 = new Car("Toyota", "Camry", 2020);
+    document.getElementById("carOutput").innerText = car1.info();
+    </script>
+</body>

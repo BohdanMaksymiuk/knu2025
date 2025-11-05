@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Завдання 1–6</title>
+    <link rel="stylesheet" href="style.css">
+    <div class="nav-buttons">
+    <a href="../lab8.html" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+
+    <div class="container">
+            <section class="card">
+      <h2>Завдання 4. Клас ElectricCar</h2>
+      <div id="electricCarOutput" class="result"></div>
+    </section>
+    </div>
+    
+    <script>
+        class Car {
+            constructor(brand, model, year) {
+                this.brand = brand;
+                this.model = model;
+                this.year = year;
+            }
+            info() {
+                return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+            }
+        }
+        class ElectricCar extends Car {
+            constructor(brand, model, year, battery) {
+                super(brand, model, year);
+                this.battery = battery;
+            }
+            charge() {
+                return `${this.brand} ${this.model} заряджається... Батарея: ${this.battery} kWh`;
+            }
+        }
+        const tesla = new ElectricCar("Tesla", "Model 3", 2022, 75);
+        document.getElementById("electricCarOutput").innerHTML = `${tesla.info()}<br>${tesla.charge()}`;
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Завдання 1–6</title>
+    <link rel="stylesheet" href="style.css">
+    <div class="nav-buttons">
+    <a href="../lab8.html" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+
+    <div class="container">
+           <section class="card">
+                <h2>Завдання 5. Статичний метод</h2>
+                <div id="mathOutput" class="result"></div>
+            </section>
+    </div>
+    
+    <script>
+        class MathHelper {
+      static add(a, b) {
+        return a + b;
+      }
+    }
+    document.getElementById("mathOutput").innerText = `Результат MathHelper.add(5, 7): ${MathHelper.add(5, 7)}`;
+    </script>
+</body>
+</html>

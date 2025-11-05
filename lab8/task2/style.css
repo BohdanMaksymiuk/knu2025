@@ -1,0 +1,92 @@
+.card h3 {
+  color: #2c3e50;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  border-bottom: 1px solid #3498db;
+  padding-bottom: 5px;
+}
+
+.card p {
+  margin-bottom: 15px;
+  color: #555;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.card input[type="number"] {
+  width: 250px;
+  padding: 10px 12px;
+  border: 2px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  margin-right: 10px;
+  transition: border-color 0.3s;
+}
+
+.card input[type="number"]:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.card label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.card button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  transition: background 0.3s;
+}
+
+.card button:hover {
+  background: #2980b9;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background: #ecf0f1;
+  border-radius: 6px;
+  border-left: 4px solid #3498db;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3c51;
+  min-height: 20px;
+}
+
+.nav-buttons {
+  margin-bottom: 25px;
+}
+
+.btn-nav {
+  display: inline-block;
+  background: #3498db;
+  color: white;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-nav:hover {
+  background: #2980b9;
+  text-decoration: none;
+  color: white;
+}
