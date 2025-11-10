@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №9 — JavaScript-анімації</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Лабораторна робота №9</h1>
+  <h2>JavaScript-анімації</h2>
+
+  <div id="logo">
+    <div class="shape" id="shape"></div>
+    <div class="text" id="logoText"></div>
+  </div>
+
+  <button id="toggleBtn">Запустити / Зупинити логотип</button>
+  <br>
+  <a href="../lab9.html" class="home-btn">На головну</a>
+
+  <script>
+    const shape = document.getElementById("shape");
+    const textContainer = document.getElementById("logoText");
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    const text = "Інженерія програмного забезпечення";
+    text.split("").forEach(char => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.classList.add("char");
+      textContainer.appendChild(span);
+    });
+
+    const chars = document.querySelectorAll(".char");
+
+    let running = false;
+    let scale = 1;
+    let growing = true;
+    let angle = 0;
+    let dx = 2, dy = 2;
+    let x = 0, y = 0;
+    let animationFrame;
+
+    function createParticle(x, y) {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+      const color = `hsl(${Math.random() * 360}, 80%, 65%)`;
+      p.style.background = color;
+      p.style.left = x + "px";
+      p.style.top = y + "px";
+      document.body.appendChild(p);
+
+      let opacity = 1;
+      let size = 8;
+      const fade = () => {
+        if (!running) return;
+        opacity -= 0.02;
+        size += 1;
+        p.style.opacity = opacity;
+        p.style.width = size + "px";
+        p.style.height = size + "px";
+        if (opacity <= 0) p.remove();
+        else requestAnimationFrame(fade);
+      };
+      fade();
+    }
+
+    function animateText() {
+      chars.forEach((char, i) => {
+        setTimeout(() => {
+          char.style.transition = "all 0.4s ease";
+          char.style.opacity = 1;
+          char.style.transform = "translateY(0)";
+        }, i * 60);
+      });
+      textContainer.style.opacity = 1;
+    }
+
+    function hideText() {
+      chars.forEach((char, i) => {
+        setTimeout(() => {
+          char.style.opacity = 0;
+          char.style.transform = "translateY(10px)";
+        }, i * 40);
+      });
+      textContainer.style.opacity = 0;
+    }
+
+    function animateLogo() {
+      if (!running) return;
+
+      x += dx;
+      y += dy;
+      if (x > 120 || x < -120) dx *= -1;
+      if (y > 120 || y < -120) dy *= -1;
+
+      if (growing) scale += 0.01;
+      else scale -= 0.01;
+      if (scale > 1.35 || scale < 0.85) growing = !growing;
+
+      angle += 2;
+
+      shape.style.transform =
+        `translate(${x}px, ${y}px) scale(${scale}) rotate(${angle}deg)`;
+
+      shape.style.background =
+        `radial-gradient(circle, hsl(${angle * 2},80%,65%), hsl(${angle * 2 + 40},60%,40%))`;
+
+      if (Math.random() < 0.1) {
+        const rect = shape.getBoundingClientRect();
+        createParticle(rect.left + 60, rect.top + 60);
+      }
+
+      animationFrame = requestAnimationFrame(animateLogo);
+    }
+
+    toggleBtn.onclick = () => {
+      running = !running;
+      if (running) {
+        animateText();
+        animateLogo();
+      } else {
+        hideText();
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Завдання 1 — JavaScript-Анімації</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Завдання 1. Приклади JavaScript-анімацій</h1>
+
+<div class="box" id="box"></div>
+<div class="circle" id="circle"></div>
+<div class="easing-box" id="ease"></div>
+
+<button class="back" onclick="window.location.href='../lab9.html'">Назад</button>
+
+<script>
+let box = document.getElementById("box");
+let pos = 20;
+let direction = 1;
+
+function moveBox() {
+  pos += direction * 2;
+  if (pos > window.innerWidth - 100 || pos < 20) direction *= -1;
+  box.style.left = pos + "px";
+  requestAnimationFrame(moveBox);
+}
+moveBox();
+
+let circle = document.getElementById("circle");
+let scale = 1, grow = true;
+
+function pulse() {
+  scale += grow ? 0.01 : -0.01;
+  if (scale > 1.4 || scale < 0.8) grow = !grow;
+  circle.style.transform = `scale(${scale})`;
+  requestAnimationFrame(pulse);
+}
+pulse();
+
+let ease = document.getElementById("ease");
+let targetX = window.innerWidth - 120;
+let currentX = 20;
+
+function easeMove() {
+  currentX += (targetX - currentX) * 0.03;
+  ease.style.left = currentX + "px";
+  requestAnimationFrame(easeMove);
+}
+easeMove();
+</script>
+
+</body>
+</html>

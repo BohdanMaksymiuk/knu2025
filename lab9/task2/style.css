@@ -1,0 +1,89 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: radial-gradient(circle at center, #0a0f1a 0%, #0c1927 40%, #08121d 100%);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+  color: #e0f7fa;
+}
+
+h1, h2 {
+  color: #004d40;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+#logo {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 120px auto 0;
+}
+
+.shape {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+  background: radial-gradient(circle, #26a69a, #00897b);
+  box-shadow:
+    0 0 25px rgba(0, 150, 136, 0.5),
+    inset 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+.text {
+  position: absolute;
+  width: 100%;
+  top: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 18px;
+  opacity: 0;
+  color: #003d33;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+button, .home-btn {
+  margin-top: 25px;
+  padding: 10px 30px;
+  font-size: 17px;
+  border: none;
+  border-radius: 8px;
+  background-color: #00796b;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover,
+.home-btn:hover {
+  background-color: #004d40;
+  transform: scale(1.05);
+}
+
+.home-btn {
+  display: inline-block;
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  transition: opacity 0.3s;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
