@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрація методів jQuery - Варіант 9</title>
+    <link rel="stylesheet" href="style3.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <button id="back-btn" onclick="history.back()">← Назад</button>
+        
+        <h1>Демонстрація методів jQuery - Варіант 9</h1>
+        
+        <div class="demo-area">
+            <!-- Структура для демонстрації -->
+            <div class="family-tree">
+                <div class="level-1" id="grandparent">
+                    <p>Батьківський елемент (рівень 1)</p>
+                    <div class="level-2" id="parent1">
+                        <p>Дочірній елемент 1 (рівень 2)</p>
+                        <div class="level-3" id="child1">
+                            <p>Внучатий елемент 1 (рівень 3)</p>
+                            <span class="special">Спеціальний елемент</span>
+                        </div>
+                        <div class="level-3" id="child2">
+                            <p>Внучатий елемент 2 (рівень 3)</p>
+                        </div>
+                    </div>
+                    <div class="level-2" id="parent2">
+                        <p>Дочірній елемент 2 (рівень 2)</p>
+                        <div class="level-3" id="child3">
+                            <p>Внучатий елемент 3 (рівень 3)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопки для методів -->
+            <div class="controls">
+                <button id="find-btn">.find()</button>
+                <button id="not-btn">.not()</button>
+                <button id="first-btn">.first()</button>
+                <button id="add-btn">.add()</button>
+                <button id="offsetParent-btn">.offsetParent()</button>
+            </div>
+
+            <!-- Результати -->
+            <div class="results">
+                <h3>Результати:</h3>
+                <div id="output"></div>
+            </div>
+
+            <!-- Додаткові елементи для тестування -->
+            <div class="test-elements">
+                <div class="test-item" data-type="A">Елемент A</div>
+                <div class="test-item" data-type="B">Елемент B</div>
+                <div class="test-item" data-type="A">Елемент A</div>
+                <div class="test-item" data-type="C">Елемент C</div>
+                <div class="test-item highlight" data-type="B">Елемент B (виділений)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Метод .find()
+            $('#find-btn').click(function() {
+                clearHighlights();
+                var found = $('.family-tree').find('.level-3');
+                found.addClass('highlight');
+                $('#output').html(
+                    '<strong>.find(".level-3"):</strong><br>' +
+                    'Знайдено ' + found.length + ' елементів:<br>' +
+                    getElementInfo(found)
+                );
+            });
+
+            // Метод .not()
+            $('#not-btn').click(function() {
+                clearHighlights();
+                var allItems = $('.test-item');
+                var filtered = allItems.not('[data-type="A"]');
+                filtered.addClass('highlight');
+                $('#output').html(
+                    '<strong>.not(\'[data-type="A"]\'):</strong><br>' +
+                    'З ' + allItems.length + ' елементів залишено ' + filtered.length + ':<br>' +
+                    getElementInfo(filtered)
+                );
+            });
+
+            // Метод .first()
+            $('#first-btn').click(function() {
+                clearHighlights();
+                var allChildren = $('.level-2').children();
+                var firstChild = allChildren.first();
+                firstChild.addClass('highlight');
+                $('#output').html(
+                    '<strong>.first():</strong><br>' +
+                    'З ' + allChildren.length + ' дочірніх елементів перший:<br>' +
+                    getElementInfo(firstChild)
+                );
+            });
+
+            // Метод .add()
+            $('#add-btn').click(function() {
+                clearHighlights();
+                var baseSet = $('#child1, #child2');
+                var extendedSet = baseSet.add('#child3');
+                extendedSet.addClass('highlight');
+                $('#output').html(
+                    '<strong>.add():</strong><br>' +
+                    'Базовий набір: ' + baseSet.length + ' елементи<br>' +
+                    'Розширений набір: ' + extendedSet.length + ' елементи<br>' +
+                    getElementInfo(extendedSet)
+                );
+            });
+
+            // Метод .offsetParent()
+            $('#offsetParent-btn').click(function() {
+                clearHighlights();
+                var child = $('#child1');
+                var offsetParent = child.offsetParent();
+                offsetParent.addClass('highlight');
+                $('#output').html(
+                    '<strong>.offsetParent():</strong><br>' +
+                    'Для елемента ' + child.attr('id') + '<br>' +
+                    'offsetParent: ' + getElementInfo(offsetParent)
+                );
+            });
+
+            // Допоміжні функції
+            function clearHighlights() {
+                $('.family-tree *').removeClass('highlight');
+                $('.test-elements *').removeClass('highlight');
+            }
+
+            function getElementInfo(elements) {
+                var info = '';
+                elements.each(function() {
+                    var elem = $(this);
+                    info += '- ' + (elem.attr('id') || elem.text().trim()) + '<br>';
+                });
+                return info;
+            }
+        });
+    </script>
+</body>
+</html>

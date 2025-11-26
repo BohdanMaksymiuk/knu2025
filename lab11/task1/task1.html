@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрація методів jQuery</title>
+    <link rel="stylesheet" href="style1.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Демонстрація методів jQuery</h1>
+        
+        <section class="demo-section">
+            <h2>Метод .html()</h2>
+            <div id="html-demo">
+                <p>Початковий текст</p>
+            </div>
+            <button id="html-get">Отримати HTML</button>
+            <button id="html-set">Змінити HTML</button>
+            <div id="html-result"></div>
+        </section>
+        
+        <section class="demo-section">
+            <h2>Метод .css()</h2>
+            <div id="css-demo">
+                <p>Елемент для демонстрації CSS</p>
+            </div>
+            <button id="css-get">Отримати CSS</button>
+            <button id="css-set">Змінити CSS</button>
+            <div id="css-result"></div>
+        </section>
+        
+        <section class="demo-section">
+            <h2>Метод .val()</h2>
+            <input type="text" id="val-demo" value="Початкове значення">
+            <button id="val-get">Отримати значення</button>
+            <button id="val-set">Змінити значення</button>
+            <div id="val-result"></div>
+        </section>
+        
+        <section class="demo-section">
+            <h2>Метод .attr()</h2>
+            <img id="attr-demo" src="image.jpg" alt="Початкове зображення">
+            <br>
+            <button id="attr-get">Отримати атрибут src</button>
+            <button id="attr-set">Змінити атрибут src</button>
+            <button id="attr-set-multiple">Змінити кілька атрибутів</button>
+            <button id="attr-set-function">Змінити атрибут за допомогою функції</button>
+            <button id="attr-remove">Видалити атрибут alt</button>
+            <div id="attr-result"></div>
+        </section>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#html-get').click(function() {
+                var content = $('#html-demo').html();
+                $('#html-result').html('<strong>Отриманий HTML:</strong> ' + content);
+            });
+            
+            $('#html-set').click(function() {
+                $('#html-demo').html('<p><strong>Новий HTML вміст</strong> з <em>форматуванням</em></p>');
+                $('#html-result').html('<strong>HTML було змінено!</strong>');
+            });
+
+            $('#css-get').click(function() {
+                var color = $('#css-demo').css('color');
+                $('#css-result').html('<strong>Поточний колір тексту:</strong> ' + color);
+            });
+            
+            $('#css-set').click(function() {
+                $('#css-demo').css({
+                    'color': 'red',
+                    'font-weight': 'bold',
+                    'background-color': '#f0f0f0',
+                    'padding': '10px'
+                });
+                $('#css-result').html('<strong>CSS властивості було змінено!</strong>');
+            });
+            
+            $('#val-get').click(function() {
+                var value = $('#val-demo').val();
+                $('#val-result').html('<strong>Поточне значення:</strong> ' + value);
+            });
+            
+            $('#val-set').click(function() {
+                $('#val-demo').val('Нове значення поля');
+                $('#val-result').html('<strong>Значення було змінено!</strong>');
+            });
+            
+            $('#attr-get').click(function() {
+                var src = $('#attr-demo').attr('src');
+                $('#attr-result').html('<strong>Поточне значення атрибута src:</strong> ' + src);
+            });
+            
+            $('#attr-set').click(function() {
+                $('#attr-demo').attr('src', 'image.jpg');
+                $('#attr-result').html('<strong>Атрибут src було змінено!</strong>');
+            });
+            
+            $('#attr-set-multiple').click(function() {
+                $('#attr-demo').attr({
+                    'src': 'image.jpg',
+                    'alt': 'Новий опис зображення',
+                    'title': 'Новий заголовок'
+                });
+                $('#attr-result').html('<strong>Кілька атрибутів було змінено!</strong>');
+            });
+            
+            $('#attr-set-function').click(function() {
+                $('#attr-demo').attr('width', function(index, currentValue) {
+                    return parseInt(currentValue) + 50;
+                });
+                $('#attr-result').html('<strong>Атрибут width було збільшено на 50px за допомогою функції!</strong>');
+            });
+            
+            $('#attr-remove').click(function() {
+                $('#attr-demo').removeAttr('alt');
+                $('#attr-result').html('<strong>Атрибут alt було видалено!</strong>');
+            });
+        });
+    </script>
+</body>
+</html>

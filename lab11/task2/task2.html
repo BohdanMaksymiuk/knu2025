@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрація методів jQuery - Варіант 9</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <button id="back-btn" onclick="history.back()">← Назад</button>
+        
+        <h1>Демонстрація методів jQuery - Варіант 9</h1>
+        
+        <section class="demo-section">
+            <h2>Метод .wrap()</h2>
+            <p>Обгортає кожен вибраний елемент вказаним HTML-елементом</p>
+            <div class="demo-element" id="wrap-demo">
+                <p>Цей елемент буде обгорнуто</p>
+            </div>
+            <button id="wrap-btn">Застосувати .wrap()</button>
+            <button id="unwrap-btn">Скасувати .wrap()</button>
+        </section>
+        
+        <section class="demo-section">
+            <h2>Метод .unwrap()</h2>
+            <p>Видаляє батьківський елемент вибраних елементів</p>
+            <div class="wrapper">
+                <div class="demo-element" id="unwrap-demo">
+                    <p>Цей елемент має батьківський контейнер</p>
+                </div>
+            </div>
+            <button id="unwrap-demo-btn">Застосувати .unwrap()</button>
+        </section>
+        
+        <section class="demo-section">
+            <h2>Метод .height() з функцією</h2>
+            <p>Встановлює висоту елемента за допомогою функції</p>
+            <div class="demo-element" id="height-demo" style="height: 50px; overflow: hidden;">
+                <p>Елемент з початковою висотою 50px</p>
+            </div>
+            <button id="height-btn">Змінити висоту (функція)</button>
+            <div id="height-info"></div>
+        </section>
+        
+        <section class="demo-section">
+            <h2>Метод .position()</h2>
+            <p>Повертає позицію елемента відносно батьківського елемента</p>
+            <div class="position-container">
+                <div class="demo-element" id="position-demo">
+                    <p>Абсолютно позиціонований елемент</p>
+                </div>
+            </div>
+            <button id="position-btn">Отримати позицію</button>
+            <div id="position-info"></div>
+        </section>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#wrap-btn').click(function() {
+                $('#wrap-demo').wrap('<div class="wrapper"><p>Новий батьківський елемент</p></div>');
+            });
+            
+            $('#unwrap-btn').click(function() {
+                $('#wrap-demo').unwrap();
+            });
+            
+            $('#unwrap-demo-btn').click(function() {
+                $('#unwrap-demo').unwrap();
+            });
+            
+            $('#height-btn').click(function() {
+                $('#height-demo').height(function(index, currentHeight) {
+                    var newHeight = parseInt(currentHeight) + 30;
+                    $('#height-info').html('<strong>Поточна висота:</strong> ' + currentHeight + 'px<br>' +
+                                          '<strong>Нова висота:</strong> ' + newHeight + 'px');
+                    return newHeight;
+                });
+            });
+            
+            $('#position-btn').click(function() {
+                var position = $('#position-demo').position();
+                $('#position-info').html(
+                    '<strong>Позиція відносно батьківського елемента:</strong><br>' +
+                    'Top: ' + position.top + 'px<br>' +
+                    'Left: ' + position.left + 'px'
+                );
+            });
+        });
+    </script>
+</body>
+</html>

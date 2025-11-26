@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрація методу .filter() - Завдання 4</title>
+    <link rel="stylesheet" href="style4.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <button id="back-btn" onclick="history.back()">← Назад</button>
+        
+        <h1>Демонстрація методу .filter()</h1>
+        
+        <div class="instructions">
+            <p><strong>Завдання:</strong> Використовуючи метод .filter(), задати ввімкнення стилів і додавання тексту "modify":</p>
+            <ul>
+                <li>для всіх елементів деякого класу</li>
+                <li>для кожного третього елементу &lt;li&gt;</li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <button id="filter-class-btn">Фільтр по класу</button>
+            <button id="filter-third-btn">Фільтр кожного третього &lt;li&gt;</button>
+            <button id="reset-btn">Скинути</button>
+        </div>
+
+        <div class="demo-section">
+            <h2>Фільтрація по класу "special"</h2>
+            <div class="item">Звичайний елемент 1</div>
+            <div class="item special">Елемент з класом special</div>
+            <div class="item">Звичайний елемент 2</div>
+            <div class="item special">Елемент з класом special</div>
+            <div class="item">Звичайний елемент 3</div>
+            <div class="item special">Елемент з класом special</div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Фільтрація кожного третього &lt;li&gt;</h2>
+            <ul class="number-list">
+                <li>Елемент списку 1</li>
+                <li>Елемент списку 2</li>
+                <li>Елемент списку 3</li>
+                <li>Елемент списку 4</li>
+                <li>Елемент списку 5</li>
+                <li>Елемент списку 6</li>
+                <li>Елемент списку 7</li>
+                <li>Елемент списку 8</li>
+                <li>Елемент списку 9</li>
+            </ul>
+        </div>
+
+        <div class="results">
+            <h3>Інформація:</h3>
+            <div id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#filter-class-btn').click(function() {
+                resetAll();
+                
+                var filteredItems = $('.item').filter('.special');
+                filteredItems.addClass('modified').append(' - modify');
+                
+                $('#output').html(
+                    '<strong>Фільтр по класу ".special":</strong><br>' +
+                    'Знайдено ' + filteredItems.length + ' елементів з класом "special"<br>' +
+                    'Додано текст "modify" та застосовано стилі'
+                );
+            });
+
+            $('#filter-third-btn').click(function() {
+                resetAll();
+                
+                var filteredItems = $('.number-list li').filter(function(index) {
+                    return (index + 1) % 3 === 0; 
+                });
+                
+                filteredItems.addClass('modified').append(' - modify');
+                
+                $('#output').html(
+                    '<strong>Фільтр кожного третього &lt;li&gt;:</strong><br>' +
+                    'Знайдено ' + filteredItems.length + ' елементів<br>' +
+                    'Позиції: ' + filteredItems.map(function() { 
+                        return $(this).index() + 1; 
+                    }).get().join(', ') + '<br>' +
+                    'Додано текст "modify" та застосовано стилі'
+                );
+            });
+
+            $('#reset-btn').click(function() {
+                resetAll();
+                $('#output').html('<em>Стан скинуто до початкового</em>');
+            });
+
+            function resetAll() {
+                $('.item').removeClass('modified').contents().filter(function() {
+                    return this.nodeType === 3;
+                }).remove();
+                $('.item').find('span').remove();
+                
+                $('.number-list li').removeClass('modified').contents().filter(function() {
+                    return this.nodeType === 3;
+                }).remove();
+                $('.number-list li').find('span').remove();
+                
+                $('.item.special').each(function() {
+                    var originalText = $(this).text().replace(' - modify', '');
+                    $(this).text(originalText);
+                });
+                
+                $('.number-list li').each(function() {
+                    var originalText = $(this).text().replace(' - modify', '');
+                    $(this).text(originalText);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

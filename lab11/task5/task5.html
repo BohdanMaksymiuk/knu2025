@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрація методів jQuery - Завдання 5</title>
+    <link rel="stylesheet" href="style5.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <button id="back-btn" onclick="history.back()">← Назад</button>
+        
+        <h1>Демонстрація методів jQuery - Завдання 5</h1>
+        <h2>Варіант 9: $.isEmptyObject() та три наступні методи</h2>
+
+        <div class="methods-container">
+            <section class="method-section">
+                <h3>$.isEmptyObject()</h3>
+                <p>Перевіряє, чи є об'єкт порожнім (не має власних властивостей)</p>
+                <div class="demo-area">
+                    <button id="isEmptyObject-btn">Перевірити об'єкти</button>
+                    <div id="isEmptyObject-output" class="output"></div>
+                </div>
+            </section>
+
+            <section class="method-section">
+                <h3>$.isNumeric()</h3>
+                <p>Перевіряє, чи є передане значення числом або може бути перетворене на число</p>
+                <div class="demo-area">
+                    <button id="isNumeric-btn">Перевірити значення</button>
+                    <div id="isNumeric-output" class="output"></div>
+                </div>
+            </section>
+
+            <section class="method-section">
+                <h3>$.isPlainObject()</h3>
+                <p>Перевіряє, чи є об'єкт "простим" (створений за допомогою {} або new Object())</p>
+                <div class="demo-area">
+                    <button id="isPlainObject-btn">Перевірити об'єкти</button>
+                    <div id="isPlainObject-output" class="output"></div>
+                </div>
+            </section>
+
+            <section class="method-section">
+                <h3>$.makeArray()</h3>
+                <p>Перетворює об'єкт, подібний до масиву, в справжній масив JavaScript</p>
+                <div class="demo-area">
+                    <button id="makeArray-btn">Перетворити в масив</button>
+                    <div id="makeArray-output" class="output"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#isEmptyObject-btn').click(function() {
+                var obj1 = {};
+                var obj2 = {name: "John", age: 30};
+                var obj3 = new Object();
+                var array = [1, 2, 3];
+                var nullObj = null;
+                var string = "text";
+
+                var result = `
+                    <strong>Результати перевірки:</strong><br>
+                    {}: ${$.isEmptyObject(obj1)}<br>
+                    {name: "John", age: 30}: ${$.isEmptyObject(obj2)}<br>
+                    new Object(): ${$.isEmptyObject(obj3)}<br>
+                    [1, 2, 3]: ${$.isEmptyObject(array)}<br>
+                    null: ${$.isEmptyObject(nullObj)}<br>
+                    "text": ${$.isEmptyObject(string)}
+                `;
+
+                $('#isEmptyObject-output').html(result);
+            });
+
+            $('#isNumeric-btn').click(function() {
+                var num1 = 42;
+                var num2 = "123";
+                var num3 = "3.14";
+                var num4 = "0xFF";
+                var num5 = "1e5";
+                var num6 = "abc";
+                var num7 = "";
+                var num8 = null;
+                var num9 = true;
+                var num10 = "123px";
+
+                var result = `
+                    <strong>Результати перевірки:</strong><br>
+                    42: ${$.isNumeric(num1)}<br>
+                    "123": ${$.isNumeric(num2)}<br>
+                    "3.14": ${$.isNumeric(num3)}<br>
+                    "0xFF": ${$.isNumeric(num4)}<br>
+                    "1e5": ${$.isNumeric(num5)}<br>
+                    "abc": ${$.isNumeric(num6)}<br>
+                    "": ${$.isNumeric(num7)}<br>
+                    null: ${$.isNumeric(num8)}<br>
+                    true: ${$.isNumeric(num9)}<br>
+                    "123px": ${$.isNumeric(num10)}
+                `;
+
+                $('#isNumeric-output').html(result);
+            });
+
+            $('#isPlainObject-btn').click(function() {
+                var obj1 = {};
+                var obj2 = {name: "John"};
+                var obj3 = new Object();
+                var obj4 = new Date();
+                var obj5 = [1, 2, 3];
+                var obj6 = null;
+                var obj7 = document.createElement('div');
+                var obj8 = function() {};
+
+                var result = `
+                    <strong>Результати перевірки:</strong><br>
+                    {}: ${$.isPlainObject(obj1)}<br>
+                    {name: "John"}: ${$.isPlainObject(obj2)}<br>
+                    new Object(): ${$.isPlainObject(obj3)}<br>
+                    new Date(): ${$.isPlainObject(obj4)}<br>
+                    [1, 2, 3]: ${$.isPlainObject(obj5)}<br>
+                    null: ${$.isPlainObject(obj6)}<br>
+                    DOM елемент: ${$.isPlainObject(obj7)}<br>
+                    функція: ${$.isPlainObject(obj8)}
+                `;
+
+                $('#isPlainObject-output').html(result);
+            });
+
+            $('#makeArray-btn').click(function() {
+                var nodeList = document.querySelectorAll('.method-section');
+                var arrayFromNodeList = $.makeArray(nodeList);
+                
+                function testFunction() {
+                    return $.makeArray(arguments);
+                }
+                var argumentsArray = testFunction(1, "two", 3);
+                
+                var jqueryObject = $('button');
+                var arrayFromJquery = $.makeArray(jqueryObject);
+                
+                var plainObj = {0: 'a', 1: 'b', 2: 'c', length: 3};
+                var arrayFromPlainObj = $.makeArray(plainObj);
+
+                var result = `
+                    <strong>Результати перетворення:</strong><br><br>
+                    
+                    <strong>NodeList → Масив:</strong><br>
+                    Тип до: ${Object.prototype.toString.call(nodeList)}<br>
+                    Тип після: ${Object.prototype.toString.call(arrayFromNodeList)}<br>
+                    Довжина: ${arrayFromNodeList.length}<br><br>
+                    
+                    <strong>Arguments → Масив:</strong><br>
+                    ${JSON.stringify(argumentsArray)}<br><br>
+                    
+                    <strong>jQuery Object → Масив:</strong><br>
+                    Кількість елементів: ${arrayFromJquery.length}<br><br>
+                    
+                    <strong>Plain Object → Масив:</strong><br>
+                    ${JSON.stringify(arrayFromPlainObj)}
+                `;
+
+                $('#makeArray-output').html(result);
+            });
+        });
+    </script>
+</body>
+</html>
