@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Методи - Демонстрація</title>
+    <link rel="stylesheet" href="style1.css">
+    <script src="jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Демонстрація jQuery методів</h1>
+            <p class="subtitle">Ваш варіант: <span class="variant">.hide()</span>. Інші методи: .show(), .fadeToggle(), .slideUp()</p>
+        </header>
+
+        <main>
+            <div class="methods-container">
+                <section class="method-card" id="method1">
+                    <h2>Метод <code>.hide()</code></h2>
+                    <p>Ховає вибрані елементи, встановлюючи їм стиль display: none</p>
+                    <div class="demo-area">
+                        <div class="demo-box" id="hide-demo-box">
+                            <p>Цей блок буде приховано</p>
+                            <p>Ефект: миттєве зникнення</p>
+                        </div>
+                        <div class="button-group">
+                            <button id="hide-btn" class="action-btn">Приховати</button>
+                            <button id="reset-hide-btn" class="reset-btn">Показати знову</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="method-card" id="method2">
+                    <h2>Метод <code>.show()</code></h2>
+                    <p>Показує приховані елементи, встановлюючи display: block або інше значення</p>
+                    <div class="demo-area">
+                        <div class="demo-box hidden" id="show-demo-box">
+                            <p>Цей блок приховано спочатку</p>
+                            <p>Натисніть "Показати", щоб побачити його</p>
+                        </div>
+                        <div class="button-group">
+                            <button id="show-btn" class="action-btn">Показати</button>
+                            <button id="reset-show-btn" class="reset-btn">Приховати знову</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="method-card" id="method3">
+                    <h2>Метод <code>.fadeToggle()</code></h2>
+                    <p>Перемикає видимість елементів з ефектом зникнення/появлення</p>
+                    <div class="demo-area">
+                        <div class="demo-box" id="fade-demo-box">
+                            <p>Цей блок зникає та з'являється</p>
+                            <p>Ефект: плавне зникнення</p>
+                        </div>
+                        <div class="button-group">
+                            <button id="fade-toggle-btn" class="action-btn">Перемкнути зникнення</button>
+                            <button id="reset-fade-btn" class="reset-btn">Показати знову</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="method-card" id="method4">
+                    <h2>Метод <code>.slideUp()</code></h2>
+                    <p>Ховає елементи з ефектом згортання вгору</p>
+                    <div class="demo-area">
+                        <div class="demo-box" id="slide-demo-box">
+                            <p>Цей блок згортається вгору</p>
+                            <p>Ефект: анімація згортання</p>
+                        </div>
+                        <div class="button-group">
+                            <button id="slide-up-btn" class="action-btn">Згорнути</button>
+                            <button id="reset-slide-btn" class="reset-btn">Розгорнути</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="controls">
+                <button id="reset-all-btn" class="control-btn">Скинути всі демонстрації</button>
+                <button id="back-btn" class="control-btn back-btn">Назад</button>
+            </div>
+        </main>
+    </div>
+
+   <script>
+    $(document).ready(function() {
+        console.log("jQuery готовий до роботи!");
+        
+        // Метод 1: .hide()
+        $('#hide-btn').click(function() {
+            $('#hide-demo-box').hide(800);
+            $(this).text('Приховано!');
+            setTimeout(() => {
+                $(this).text('Приховати');
+            }, 1000);
+        });
+        
+        $('#reset-hide-btn').click(function() {
+            $('#hide-demo-box').show(400);
+        });
+        
+        // Метод 2: .show()
+        $('#show-btn').click(function() {
+            $('#show-demo-box').show(1000);
+            $(this).text('Показано!');
+            setTimeout(() => {
+                $(this).text('Показати');
+            }, 1000);
+        });
+        
+        $('#reset-show-btn').click(function() {
+            $('#show-demo-box').hide(400);
+        });
+        
+        // Метод 3: .fadeToggle()
+        $('#fade-toggle-btn').click(function() {
+            $('#fade-demo-box').fadeToggle(1000);
+            $(this).text($(this).text() === 'Перемкнути зникнення' ? 'Перемкнуто!' : 'Перемкнути зникнення');
+            setTimeout(() => {
+                $(this).text('Перемкнути зникнення');
+            }, 1000);
+        });
+        
+        $('#reset-fade-btn').click(function() {
+            $('#fade-demo-box').stop().fadeIn(400);
+        });
+        
+        // Метод 4: .slideUp()
+        $('#slide-up-btn').click(function() {
+            $('#slide-demo-box').slideUp(1000);
+            $(this).text('Згорнуто!');
+            setTimeout(() => {
+                $(this).text('Згорнути');
+            }, 1000);
+        });
+        
+        $('#reset-slide-btn').click(function() {
+            $('#slide-demo-box').slideDown(800);
+        });
+        
+        $('#reset-all-btn').click(function() {
+            $('.demo-box').show(400);
+            
+            $('.action-btn').each(function() {
+                const originalText = $(this).attr('data-original') || $(this).text();
+                if (!$(this).attr('data-original')) {
+                    $(this).attr('data-original', originalText);
+                }
+                $(this).text(originalText);
+            });
+            
+            $(this).text('Всі демонстрації скинуто!');
+            setTimeout(() => {
+                $(this).text('Скинути всі демонстрації');
+            }, 1500);
+        });
+        
+        $('#back-btn').click(function() {
+            $(this).text('Повертаємось...');
+            
+            setTimeout(() => {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.location.href = '/';
+                }
+            }, 300);
+        });
+        
+        $('.action-btn').each(function() {
+            $(this).attr('data-original', $(this).text());
+        });
+    });
+</script>
+</body>
+</html>

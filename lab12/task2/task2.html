@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анімований логотип - 121 Інженерія ПЗ</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Анімований логотип спеціальності 121 "Інженерія програмного забезпечення"</h1>
+        
+        <div class="animation-info">
+            <h3>Властивості анімації:</h3>
+            <ul>
+                <li><strong>Properties:</strong> width, height, opacity, font-size, color, text-shadow</li>
+                <li><strong>Duration:</strong> 2000ms (2 секунди)</li>
+                <li><strong>Easing:</strong> swing, easeOutBounce, easeInOutBack</li>
+                <li><strong>Complete:</strong> колбек-функція по завершенню</li>
+                <li><strong>Options:</strong> queue, specialEasing, step</li>
+            </ul>
+        </div>
+        
+        <div class="logo-container">
+            <div class="logo" id="animatedLogo">
+                <div class="circle" id="circle"></div>
+                <div class="code-line" id="line1"></div>
+                <div class="code-line" id="line2"></div>
+                <div class="code-line" id="line3"></div>
+                <div class="code-line" id="line4"></div>
+                <div class="code-line" id="line5"></div>
+                
+                <div class="code-bracket bracket-left" id="bracketLeft">{</div>
+                <div class="code-bracket bracket-right" id="bracketRight">}</div>
+                
+                <div class="number-container">
+                    <div class="number number-121" id="number121">121</div>
+                    <div class="number number-ipz" id="numberIPZ">ІПЗ</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status" id="status">Готовий до анімації</div>
+        
+        <div class="controls">
+            <button class="btn-start" id="startAnimation">Запустити анімацію</button>
+            <button class="btn-reset" id="resetAnimation">Скинути анімацію</button>
+            <button class="btn-back" id="backButton">Назад</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            let isAnimating = false;
+            
+            $.easing.easeOutBounce = function (x, t, b, c, d) {
+                if ((t/=d) < (1/2.75)) {
+                    return c*(7.5625*t*t) + b;
+                } else if (t < (2/2.75)) {
+                    return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+                } else if (t < (2.5/2.75)) {
+                    return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+                } else {
+                    return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+                }
+            };
+            
+            $.easing.easeInOutBack = function (x, t, b, c, d, s) {
+                if (s == undefined) s = 1.70158;
+                if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
+                return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+            };
+            
+            $('#startAnimation').click(function() {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                $('#status').text('Анімація запущена...').addClass('animating');
+                $('.logo-container').addClass('animating');
+                
+                $('#circle').css({ 
+                    width: '10px', 
+                    height: '10px', 
+                    opacity: 0,
+                    'border-radius': '0%'
+                });
+                
+                $('.code-line').css({ 
+                    width: '0px', 
+                    opacity: 0 
+                });
+                
+                $('.code-bracket').css({ 
+                    opacity: 0,
+                    fontSize: '10px'
+                });
+                
+                $('.number').css({ 
+                    opacity: 0,
+                    fontSize: '10px',
+                    color: '#3498db'
+                });
+                
+                $('#circle').animate({
+                    width: '200px',
+                    height: '200px',
+                    opacity: 1,
+                    'border-radius': '50%'
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    queue: true,
+                    specialEasing: {
+                        width: 'easeOutBounce',
+                        height: 'easeOutBounce',
+                        'border-radius': 'easeInOutBack'
+                    },
+                    step: function(now, fx) {
+                        if (fx.prop === 'width') {
+                            $('#status').text('Формування логотипа: ' + Math.round(now) + 'px');
+                        }
+                    }
+                });
+                
+                $('#bracketLeft').delay(800).animate({
+                    opacity: 1,
+                    fontSize: '40px',
+                    left: '10%',
+                    top: '30%'
+                }, {
+                    duration: 1500,
+                    easing: 'easeOutBounce',
+                    queue: true
+                });
+                
+                $('#bracketRight').delay(800).animate({
+                    opacity: 1,
+                    fontSize: '40px',
+                    right: '10%',
+                    top: '30%'
+                }, {
+                    duration: 1500,
+                    easing: 'easeOutBounce',
+                    queue: true
+                });
+                
+                $('#line1').delay(1000).animate({
+                    width: '120px',
+                    opacity: 0.9,
+                    left: '20%'
+                }, {
+                    duration: 1200,
+                    easing: 'swing',
+                    queue: true
+                });
+                
+                $('#line2').delay(1100).animate({
+                    width: '120px',
+                    opacity: 0.9,
+                    left: '15%'
+                }, {
+                    duration: 1200,
+                    easing: 'swing',
+                    queue: true
+                });
+                
+                $('#line3').delay(1200).animate({
+                    width: '120px',
+                    opacity: 0.9,
+                    left: '25%'
+                }, {
+                    duration: 1200,
+                    easing: 'swing',
+                    queue: true
+                });
+                
+                $('#line4').delay(1300).animate({
+                    width: '120px',
+                    opacity: 0.9,
+                    left: '20%'
+                }, {
+                    duration: 1200,
+                    easing: 'swing',
+                    queue: true
+                });
+                
+                $('#line5').delay(1400).animate({
+                    width: '120px',
+                    opacity: 0.9,
+                    left: '15%'
+                }, {
+                    duration: 1200,
+                    easing: 'swing',
+                    queue: true
+                });
+                
+                $('#number121').delay(1600).animate({
+                    opacity: 1,
+                    fontSize: '48px',
+                    color: '#f1c40f'
+                }, {
+                    duration: 1800,
+                    easing: 'easeOutBounce',
+                    queue: true,
+                    specialEasing: {
+                        fontSize: 'easeOutBounce',
+                        color: 'linear'
+                    }
+                });
+                
+                $('#numberIPZ').delay(1800).animate({
+                    opacity: 1,
+                    fontSize: '32px',
+                    color: 'white'
+                }, {
+                    duration: 1500,
+                    easing: 'easeOutBounce',
+                    queue: true,
+                    complete: function() {
+                        $('#status').text('Анімація завершена! Спеціальність 121 "Інженерія ПЗ"').removeClass('animating');
+                        $('.logo-container').removeClass('animating');
+                        
+                        $('#number121').addClass('glow-text');
+                        
+                        $('#circle').delay(1000).animate({
+                            background: 'linear-gradient(135deg, #9b59b6, #3498db)'
+                        }, 2000, function() {
+                            isAnimating = false;
+                        });
+                    }
+                });
+            });
+            
+            $('#resetAnimation').click(function() {
+                $('.logo *').stop(true, true);
+                $('#circle').css({ 
+                    width: '200px', 
+                    height: '200px', 
+                    opacity: 1,
+                    'border-radius': '50%',
+                    background: 'linear-gradient(135deg, #3498db, #2ecc71)'
+                });
+                
+                $('.code-line').css({ 
+                    width: '120px', 
+                    opacity: 0.9
+                });
+                
+                $('.code-bracket').css({ 
+                    opacity: 1,
+                    fontSize: '40px'
+                });
+                
+                $('.number').css({ 
+                    opacity: 1,
+                    fontSize: '42px'
+                });
+                
+                $('#number121').css({ 
+                    fontSize: '48px',
+                    color: '#f1c40f'
+                }).removeClass('glow-text');
+                
+                $('#numberIPZ').css({ 
+                    fontSize: '32px',
+                    color: 'white'
+                });
+                
+                $('#status').text('Анімація скинута').removeClass('animating');
+                $('.logo-container').removeClass('animating');
+                isAnimating = false;
+            });
+            
+            $('#backButton').click(function() {
+                if (confirm('Ви впевнені, що хочете повернутись назад?')) {
+                    window.history.back();
+                }
+            });
+            
+            $('.logo-container').hover(
+                function() {
+                    if (!isAnimating) {
+                        $(this).css({
+                            'border-color': '#e74c3c',
+                            'box-shadow': '0 0 20px rgba(231, 76, 60, 0.5)'
+                        });
+                    }
+                },
+                function() {
+                    $(this).css({
+                        'border-color': '#3498db',
+                        'box-shadow': 'none'
+                    });
+                }
+            );
+        });
+    </script>
+</body>
+</html>
